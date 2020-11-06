@@ -1,3 +1,6 @@
+/**
+ * @type {HTMLDivElement}
+ */
 const cube = document.querySelector('.cube');
 const container = document.querySelector('.cube-container');
 
@@ -15,3 +18,32 @@ container.addEventListener('mousemove',(e) => {
         cube.style.animation = 'spin 1500s infinite linear';
     });
 })
+
+// TURNING CUVE USING ARROW
+document.body.addEventListener('click', (e) => {
+    // PICK RANDOM FACE
+    const classes= ['front','back','top','bottom','left','right'];
+    classToUse = classes[Math.floor(Math.random() * classes.length)];
+    console.log(classToUse);
+
+    // INUSRE TO PICK A NEW CLASS EACH TIME
+    if (cube.classList.contains(classToUse)) {
+        classToUse = classes[Math.floor(Math.random() * classes.length)];
+    };
+    
+    // ADD CLASS TO SHOW RANDOM FACE
+    if (e.target.classList.contains('arrow')) {
+        cube.classList.remove('front','back','top','bottom','left','right');
+        cube.classList.add(classToUse);
+        cube.style.animation = 'none';
+        cube.style.transition = '1.2s ease';
+    }
+});
+
+// RESTART ANIMATION WHEN LEAVING ARROW
+document.querySelectorAll('.arrow').forEach(item => {
+    item.addEventListener('mouseleave', () => {
+        cube.style.animation ='spin 1500s infinite linear';
+        cube.classList.remove('front','back','top','bottom','left','right');
+    });
+} )
